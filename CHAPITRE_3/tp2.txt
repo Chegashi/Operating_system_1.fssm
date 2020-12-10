@@ -1,0 +1,144 @@
+
+*******************************************************************
+************     TP 2 :  Système de fichiers Linux     ************
+*******************************************************************
+
+
+####    Les chemins
+
+1. Que représente l'emplacement courant ? afficher votre emplacement courant sur le terminal
+    `pwd`
+2. Changer votre emplacement courant en se positionnant dans la racine puis exécuter la commande pwd quel est le résultat affiché
+    `cd /`
+3. Exécuter la commande cd sans arguments puis pwd
+    ◦ quel est le résultat 
+        "ce deplacer dans le racine d'utilisatuer HOME"
+    ◦ donner deux arguments qu'on peut passer à la commande cd et qui vont donner le même résultat 
+        `cd ~` 
+        `cd /home/user_1`
+4. Que représente le chemin suivant ~root ? vérifier votre réponse avec un cd
+    root represent le racine du machine
+5. En utilisant un chemin absolu changer votre emplacement courant en se positionnant dans /usr/bin
+    `cd /usr/bin`
+6. En utilisant un chemin relatif changer votre emplacement courant en se positionnant dans /usr
+    `cd ..`
+7. En utilisant un chemin relatif changer votre emplacement courant en se positionnant dans /usr/share/doc
+    `cd share/doc`
+8. En utilisant un chemin relatif changer votre emplacement courant en se positionnant dans /usr/share/dict
+    `cd ../dict`
+9. En utilisant un chemin relatif changer votre emplacement courant en se positionnant dans votre répertoire personnel 
+    `cd ../../../home/user_1/`
+
+###      Lister les fichiers
+
+1. Lister le contenu de votre emplacement courant
+    `ls`
+2. Lister tout le contenu de votre emplacement courant (y compris les fichiers cachés) 
+        `ls -a`
+    ◦ comment peut-on identifier les fichiers cachés le nom debutra avec un point '.'
+3. Afficher les informations (méta-data) relatives au fichier /etc/hosts et répondre aux questions suivantes
+    ◦ quel est le type de ce fichier : file
+    ◦ quelles est sa taille en octets : 194ko
+    ◦ à quel utilisateur et à quel groupe appartient le fichier : user: root , group: root
+    ◦ quelle est sa date de modification 
+    ◦ combien de liens possède le fichier
+
+4. Lister le contenu de /etc/udev et le contenu de tous ses sous-répertoires
+    `ls -R /etc/udev`
+5. En utilisant la commande ls afficher (sans lister le contenu) tous les objets (fichiers ou dossiers) contenus dans /etc et qui commencent par s
+    `ls | egrep ^S.*`
+6. Afficher avec ls tous les fichiers contenus dans /etc et dont le nom contient exactement 4 caractères classés par ordre croissant de taille (du petit au grand)
+    `ls | egrep  ?.{4}`
+
+###  Copier, déplacer et renommer des fichiers et des répertoires
+
+1. Copier le fichier /etc/hosts dans votre répertoire personnel
+    `cp -r /etc/hosts ~/`
+2. Refaite la copie de la question 1 en activant le mode verbeux (option -v) pour la commande cp. Quelle est l’intérêt d’utiliser l'option -v ?
+    `cp -rv /etc/hosts ~/`
+    -v : afiche le resultat de la commende
+3. Copier le fichier /etc/hosts dans votre répertoire courant sous le nom de « nouveau ».
+    `cp -rv /etc/hosts ~/nouveau`
+4. Créer un nouveau dossier appelé « myetc » dans votre répertoire personnel puis copier dedans le dossier /etc/udev et tout son contenu.
+    `mkdir -p ~/myetc/etc/udev`
+5. Supprimer le répertoire « myetc »
+    `rm -rf myetc`
+6. Sans changer de position et avec le minimum de commande créer l’arborescence suivante dans votre répertoire personnel :
+    `mkdir -p rep/{rep1/{rep2/rep3,rep4},rep5/{rep6,rep7},rep8}`
+7. Pour le reste des questions votre emplacement est rep6, répondre aux questions suivantes sans changer d'emplacement
+    a) Créer en une seule commande les fichiers suivants dans rep1 : cours1 Cours2 cours4 cours47 cours41 cours417 coursUnix coursSgbd1 coursSgbd2 coursSgbd3
+        mkdir cours1 Cours2 cours4 cours47 cours41 cours417 coursUnix coursSgbd1 coursSgbd2 coursSgbd3
+    b) Déplacer tous les fichiers se trouvant dans rep1 vers rep7
+        `mv rep1/* ../rep7/`
+    c) Copier depuis rep7 tous les fichiers qui contient exactement 6 caractères dans leurs noms vers rep3
+        mv `ls | egrep  [^?].{6}`
+    d) Supprimer de rep7 tous les fichiers qui ont dans leur nom le caractère « 4 »
+        rm `ls | egrep  [^?].{4}`
+    e) Renommer le fichier coursUnix se trouvant dans rep7 en coursLinux
+        mv ../rep7/coursUnix ../rep7/coursLinux
+    f) Copier tous les fichiers se trouvant dans rep7 et qui continent dans leur nom la chaîne « Sgb » vers rep8
+        cd  ../rep7/; mv `egrap *Sgb*` rep8
+    g) Copier le dossier rep3 et tout son contenu dans rep6
+        `cp -r ../../rep2/rep3 .`
+    h) Supprimer le dossier rep8 et tout son contenu 
+        rm -rf ../rep8
+
+Archivage et compression
+
+1. Dans votre répertoire personnel créer un répertoire appelé « acc » qui sera votre répertoire de travail dans cette partie
+    `mkdir acc`
+2. Créer une archive tar non compressée de /etc/udev sous mybackups
+    `tar -czvf mybackups.tar.gz $HOME/acc `
+3. Lister le contenu de l'archive crée dans la question 2
+    `tar -tf mybackups.tar.gz `
+4. Créer une nouvelle archive de /etc/udev que vous allez compresser avec gzip. Faites une comparaison entre la taille de la première et de la deuxième archive
+    `gzip mybackups.zip /etc/udev `
+5. Extraire l'archive de la question 4 dans votre répertoire personnel
+    `tar -zxvf mybackups.tar.gz ` 
+6. Mettre à jour l'archive de la question 4 en y ajoutant le fichier /etc/hosts
+    `gzip mybackups.zip /etc/hosts`
+7. Copier le fichier /usr/share/dict/linux.words dans votre répertoire personnel puis le compresser avec gzip
+    `cp /usr/share/dict/linux.words ~/ ; gzip mybackups.zip linux.words.gz`
+8. Afficher les informations sur le fichier linux.words.gz en utilisant la commande gzip -l.quel est le taux de la compression ?
+    `gzip -l linux.words.gz `
+9. Décompresser le fichier linux.words.gz
+    `unzip linux.words.gz`
+10. Utiliser à présent le couple bzip2 et bunzip2 pour compresser/décompresser le fichier linux.words
+    `bzip2 -k linux.words`
+    `bzip2 -d linux.words.bz2`
+11. Archiver et compresser le fichier linux.words avec zip
+    'zip linux.words'
+12. Archiver et compresser le répertoire /etc/udev et tout son contenu avec zip
+    `uzip linux.words.zip`
+13. Lister le contenu de l'archive précédente
+
+14. Décompresser l'archive précédente dans votre dossier personnel
+
+###     E) les liens
+
+1. Créez dans votre répertoire personnel un fichier de test nommé “original” et un lien physique sur ce fichier nommé “physique” ?
+    `ln original physique`
+2. Exécutez la commande ls –lhi original physique ? comparez les N° d’inodes et les tailles des deux fichiers que remarquez-vous ?
+    les memes  N° d’inodes et les tailles des deux fichiers 
+3. Créer le répertoire ~/test puis créez dedans un nouveau lien hard pour “original” nommé “physique2” ?
+    `ln original test/physique2`
+4. Exécutez la commande ls –lih ~/test/physique2 ? comparez les N° d’inodes et les tailles des deux fichiers que remarquez-vous ?
+    les memes  N° d’inodes et les tailles des deux fichiers 
+5. Insérez une ligne dans original avec un éditeur de texte. Ouvrez avec cat les fichiers “original” et “physique” et “physique2” , que constate-t-on après édition de l’un d’eux ?
+    le text a ete changer pour physique2 et physique
+6. Supprimer le fichier “original” puis ouvrir le fichier “physique” ensuite effacer le fichier “physique” puis ouvrir “physique2”. que remarquez-vous ?
+    le ficher rest
+7. Supprimer le fichier “physique 2”
+    le fichier rest 
+8. Créer ensuite un autre nouveau fichier toujours nommé “original” et créer un lien symbolique sur ce fichier nommé “symbolique”.
+    `ln -s original physique`
+9. Exécutez la commande ls –lhi original symbolique ? comparez les N° d’inodes et les tailles des deux fichiers que remarquez-vous ?
+    different N° d’inodes et different  tailles
+10. Insérez une ligne dans le fichier original ?
+
+11. Affichez le contenu du fichier “original” avec la commande cat ?
+12. Affichez le contenu du fichier “symbolique" avec la commande readlink?
+13. Exécutez la commande cat symbolique ? Que constate-t-on après édition des deux fichiers ?
+    le meme contenu
+14. Supprimer le fichier “original” (rm), puis ouvrir le fichier “symbolique”, que constatet-on ? 
+    le ficheir ne peut pat ete lue
