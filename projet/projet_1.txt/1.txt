@@ -1,1 +1,0 @@
-chercher tout les ficher a pour nom "a" et s'il exist chercher les ligne contenent le caracter 'c' dans ce ficher la

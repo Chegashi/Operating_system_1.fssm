@@ -1,0 +1,91 @@
+************************************************************
+************     TP 1 : Initiation au Shell     ************
+************************************************************
+
+###     Découverte du Shell
+
+Votre nom d'utilisateur     :
+    `whoami`
+Le nom de la machine        : 
+    `hostname`
+Votre emplacement courant   :
+    `pwd`
+
+
+###     Les variables
+
+1.  Afficher le message suivant sur le terminal « bonjour tout le monde » :
+    `echo " bonjour tout le monde "`
+2.  Quel est le contenu de la variable path ?
+        La variable PATH est une variable d'environnement qui contient une liste ordonnée de chemins dans lesquels Unix recherchera des exécutables lors de l'exécution d'une commande. 
+        L'utilisation de ces chemins signifie que nous n'avons pas à spécifier de chemin absolu lors de l'exécution d'une commande.
+    Aficher le contenu de la variable path sur leterminal
+        `echo $path`
+3. En utilisant la commande which afficher l'emplacement de la commande date:
+    `which date`
+
+###     Globing (métacaratcères)
+
+1. afficher tous les fichiers se trouvant dans votre répertoire courant.
+    `ls -f`
+2. afficher tous les fichiers qui commence par la lettre « D » et qui se trouvent dans votre
+    répertoire courant.
+        `ls | egrep D*`
+3. afficher tous les fichiers qui se terminent par un « s ».
+    `ls | egrep *D$`
+4. afficher tous les fichiers qui commencent par « D » et se terminent par « s » et ont lecaractère « n » au milieu.
+    `ls | egrep ^D*n*s$`
+5. afficher les fichiers qui ont exactement six caractères dans leurs noms.
+    `ls | egrep .{6}`
+6. afficher les fichiers qui ont 9 caractères dans leurs noms et qui commencent par « D ».
+    ls | egrep ^D(.){5}
+7. afficher les fichiers dont les noms contiennent au moins 6 caractères et se terminentpar un « s ».
+   ls | egrep (.{5})s$
+8. afficher les fichiers qui commencent par un « D » ou un « P ».
+    `ls | egrep (^D|^P) `
+9. afficher les fichiers qui ne commencent pas par un « D » ou un « P ».
+    `ls | egrep -v (^D|^M)`
+10. afficher les fichiers qui commencent par une lettre comprise entre « D » et « P ».
+    `ls | egrep ^[D-P]*`
+11. afficher les fichiers qui commencent par une lettre qui n'est pas comprise entre « D » et « P ».
+    `ls | egrep -v ^[D-P]*`
+
+###      Quoting (Quotes)
+
+1. en utilisant la commande echo et l'apostrophe inversée (` `) afficher la date d'aujourd'hui
+    `echo `date``
+2. quel est l'effet de la commande suivante:echo c'est la commande '`date`'
+    * pour (echo c'est la commande '`date`') le prompote atthend la fin de le commend car un manc un ('')
+    * pour (echo c'est la commande '`date`''') en affichele text (echo c'est la commande ) plus le resultat de la commed date .
+3. donner une autre solution permettant d'annuler la substitution de la commande date dans la commande echo
+    utiliser les double Quotes " " ou lieu de simple Quotes ' '
+4. maintenant quel est l'effet de la commande suivante:echo c'est la commande "`date` "
+    echo tntermpret pas se qui est ent les quotes il affiche le message comme il est
+5. comparer le résultat des deux commandes suivantes:echo D* et echo "D*",faites une remarque
+    echo "D*" : affiche le message comme il est sans interpretation
+    echo  D*  : afiiche tout les element qui commence par D <=> ls D*
+
+###       Enchaînement des commandes
+
+1. On considère un sous-ensemble d’une structure administrative. D’une direction(caractérisée en utilisant le (;) exécuter les trois commandes suivantes:echo bonjour,echo Linux et date
+    `echo bonjour,echo Linux et date`
+2. maintenant exécuter la ligne de commande suivante :false; echo Not; echo Conditional (noter que false est une commande qui retourne un échec) expliquer le résultat obtenu
+    `echo bonjour,echo Linux et date`
+3. exécuter la commande suivante puis commenter le résultat :echo Start && echo Going && echo Gone
+    `echo Start && echo Going && echo Gone`
+4. la même chose avec cette commande :echo Success && false && echo Bye
+    `cho Success && false && echo Bye`
+5. exécuter les deux lignes de commandes suivantes et commenter leur résultat
+    • false || echo Echec (puis que la premier retern echec le terminal essaye le dexieme commode qui va reterne succee)
+    • true || echo Rien à afficher ( la premier commende returne Success le terminal igniore la dexiem commende)
+
+####     Historique du Shell
+
+
+1.afficher l'historique des commandes que vous avez déjà exécutées
+    `history`
+2.afficher les 5 dernières commandes que vous avez exécuter
+    'history -5'
+3.exécuter la 7 eme commande qui figure dans votre historique
+    `!17`
+4.utiliser les touches de directions du clavier pour accéder aux commandes qui figurent dansl'historique et exécuter la 3 ème avant dernière commande
