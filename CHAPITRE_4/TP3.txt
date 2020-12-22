@@ -1,0 +1,112 @@
+
+*****************************************************************
+************    TP 3: Pipes, redirections et REGEX   ************
+*****************************************************************
+
+### Exercice A: les pipes et les redirections :
+
+1. Écrire le message « bonjour tout le monde » dans un fichier appelé « test » en redirigeant la sortie de la commande echo.
+    `echo "bonjour tout le monde" > test`
+2. Écrire le message « au revoir » dans le même fichier « test » en redirigeant la sortie de la commande echo et sans écraser le contenu de « test » vérifier avec cat
+   `echo "au revoir" >> test`
+3. Exécuter la commande find /etc -name hosts, y a-t-il des messages d'erreurs qui sont
+        Permission denied"
+    affichés ? rediriger les messages d'erreur de la commande précédente vers le fichier « err.txt »
+    `find /etc -name hosts  2> err.txt`
+4. Rediriger maintenant la sortie standard et la sortie d'erreur de la commande find /etc - name hosts vers deux fichiers différents (std.out et std.err)
+    `find /etc -name hosts  2> std.err > std.out`
+5. exécuter les deux commandes suivantes
+    • find /etc -name hosts >find1.out 2>&1
+    • find /etc -name hosts 2>find2.out >&2
+    Explication : 2>&1 signifie rediriger la sortie d'erreur vers le même emplacement que la
+    sortie standard.
+        Explication : 1>&2 signifie rediriger la sortie d'erreur vers le emplacement que la
+        sortie d'ereur stderr.
+6. Exécuter la commande tr 'a-z' 'A-Z' ,une fois exécutée la commande tr attend du texte à partir de l'entrée standard saisissez 3 lignes de textes à faire passer comme argument à tr (pour arrêter la saisie pressez ctrl+d)
+    `tr 'a-z' 'A-Z'`
+7. Rediriger l'entrée de tr 'a-z' 'A-Z' depuis le fichier « test » de la question 2
+    `tr 'a-z' 'A-Z' < test`
+8. En utilisant la commande tr 'a-z' 'A-Z' convertir le contenu de « find1.out » en majuscule puis le placer dans un fichier « FIND1.out » vérifier avec cat
+    `tr 'a-z' 'A-Z' < find1.out > FIND1.out & cat FIND1.out`
+9. En utilisant un pipe rediriger la sortie de la commande ls -l /etc vers l'entrée de la commande more
+    `ls -l /etc | more`
+10. Le fichier /etc/passwd contient les informations sur tous les comptes utilisateurs du système
+    • afficher le contenu de /etc/passwd avec more
+    • /etc/passwd contient plusieurs champs,le premier champ représente le nom de l'utilisateur,quel est le délimiteur qui sépare ces champs
+    :
+11. En utilisant la commande cut extraire depuis /etc/passwd les noms des utilisateurs
+    `cut  /etc/passwd -d : -f 1`
+12. En utilisant un pipe trier la sortie de la commande cut précédente par ordre alphabétique puis afficher le résultat avec more13. Numéroter les lignes de /etc/passwd avec nl
+    `cut  /etc/passwd -d : -f 1 | sort | nl`
+14. En utilisant la commande nl précédente et les commande head et tail afficher les lignes de /etc/passwd comprises entre la ligne 7 et la ligne 12
+    `cat /etc/passwd | head -n 12 |tail -n 6  `
+
+
+### Exercice B) find,cut et sort
+
+1. Chercher dans votre répertoire personnel les fichiers qui contiennent dans leur nom le mot « bash »
+    find -name "*bash*" -print 
+2. Chercher dans votre répertoire personnel les fichiers modifiés il y a 30 minutes
+    `find . -cmin 30  -ls`
+3. Chercher dans le répertoire /usr les fichiers dont la taille dépasse 2Mo
+    `find /usr -size 20M `
+4. Dans le répertoire /usr/share/bug chercher les fichiers de type répertoires et afficher les informations sur les éléments trouvés
+    `find /usr/share/bug -d  -ls `
+5. Dans le répertoire /etc chercher les fichiers de type normal ayant une taille supérieure à 100ko et appartenant à l'utilisateur root
+    `find /etc -user root -type f -size +20k `
+6. Dans le répertoires /etc chercher les répertoires qui ont été modifié il y a 10 jours et dont la taille est inférieur à 100ko (utiliser l'option -mtime ,man find pour plus d'informations)
+    `find /etc -user root -type f -size +100k -ctime +10  -ls`
+7. Créer un fichier « adresses » et insérer dedans le contenu suivant
+    192.168.1.245.www.test.com.80
+    192.168.1.17.www.test.net.8012
+    192.168.2.5.www.test.org.8001
+    192.168.3.1.www.test.ma.8098
+    192.168.2.15.www.test.to.8080
+    Sachant que la structure du fichier « adresses » est :adresse ip.nom de domamine.numéro de port
+        `echo "192.168.1.245.www.test.com.80\n192.168.1.17.www.test.net.8012\n192.168.2.5.www.test.org.8001\n192.168.3.1.www.test.ma.8098\n192.168.2.15.www.test.to.8080" > adresses`
+    a Trier le fichier par adresse ip
+        `sort -t . -k1n  adresses` 
+    b Trier le fichier par nom de domaine
+        `sort -t . -k5n -k6n -k7n  adresses`
+    c Trier le fichier par adresse ip et par numéro de port (ordre inverse)
+        `sort -t . -k1n -k2n -k3n -k4n -k8n adresses `
+    d Créer un fichier trié à partir du fichier précédent suivant l'adresse le nom de domaine et le numéro de port
+        `sort -t . -1kn -k2n -k3n    adresses`
+8. On souhaite à présent filtrer et trier le résultat de la commande ls -l /etc avec cut et sort et mettre le résultat filtré dans un fichier « filtre_ls »
+    a) Filtrer le type du fichier et le nom du fichier puis trier le résultat par type de fichier et mettre le résultat dans filtre_ls
+
+    b) Filtrer le résultat par droits d'accès,par utilisateur,par groupe et par nom du fichier puis trier par droit d'accès et par utilisateur et mettre le résultat dans filtre_ls sans écraser son contenu.
+
+9. afficher le contenu de /etc/passwd avec cat. quel est l'inconvénient de cat.
+
+10. afficher à présent le contenu de /etc/passwd avec more puis appuyez sur la touche h pour afficher l'aide , quel est le rôle des touches suivantes :espace,entrée,q et ctrl+d
+
+11. afficher le contenu de /etc/passwd avec less puis chercher dedans le terme bin12. la commande less utilise aussi les expressions régulières pour chercher le contenu d'un fichier;afficher avec less le contenu de /etc/passwd et chercher dedans les lignes contenants 3 caractères numériques contigus
+
+C) recherche de texte en utilisant les expressions régulières
+
+1.en utilisant grep chercher le terme bash dans /etc/passwd
+    `cat /etc/passwd | grep bash`
+2.en utilisant grep afficher les lignes qui commencent par « root » dans /etc/passwd
+    `cat /etc/passwd | grep ^root`
+3.en utilisant grep afficher les lignes de /etc/passwd qui se termine par « sync »
+    `cat /etc/passwd | grep ^sync`
+4.chercher tous les motifs se composant de deux caractères qui se termine par « y » dans /etc/passwd
+    `cat /etc/passwd | grep y$`
+5.afficher toutes les lignes de /etc/passwd contenant root,bin ou sync
+    `cat /etc/passwd  | grep 'root|bin|syn'`
+6.quel est le résultat de la commande suivante :egrep 'no(b|n)' /etc/passwd,quel est l'effet d'utiliser les parenthèses dans cette expression régulière
+     toutes les lignes de /etc/passwd qui commencent par no pui la letrre b ou la lettre n
+7.chercher dans les 6 premières lignes de /etc/passwd les lignes contenant un caractères numérique
+    `head -6 /etc/passwd  | grep *[0-9]`
+8.exécuter la commande suivante :grep -E '[0-9]{3}' /etc/passwd,quel est son résultat
+    `chercher dans les lignes de /etc/passwd les lignes contenant un caractères numérique ayout un chifre suivi de 3`
+9.à présent on va utiliser la commande wc pour afficher des statistiques concernant le résultat de la commande ls -l /etc
+    1. afficher le nombre de répertoires qu contient /etc
+        `find / -type d -print | grep /etc 2> /dev/null | wc --lines`
+    2. afficher le nombre de fichier normaux que contient /etc
+        `find / -type f -print | grep /etc 2> /dev/null | wc --lines `
+    3. afficher le nombre de lien symbolique que contient /etc
+    find / -type l -print | grep /etc 2> /dev/null | wc --lines 
+    4. afficher le nombre de fichiers qui ont plus qu'un lien indication :utiliser grep,cut et wc
+     `find / -type p -print | grep /etc 2> /dev/null | wc --lines `
