@@ -1,0 +1,60 @@
+*****************************************************************
+************     TP4 Linux/Unix : Droits d’acces     ************
+*****************************************************************
+
+EXERCICE 1
+
+Supposant que la commande ls affiche l’output suivant : -rw-r- - - 1 airaj staff 39184 2015-10-07 09:54 myFile
+1) Si vous etesˆ membre du groupe irisi, quels droits avez vous sur ce fichier?
+    j'ai aucun droit ni lire ,ni ecrire, ni Execute le fichier.
+2) Si vous etesˆ membre du groupe staff, quels droits avez vous sur ce fichier?
+    lire le ficher.
+3) Donner une methode ́ pour ajouter les droits de lecture a` l’utilisateur, groupe et les autres en utilisant une representation ́ octale. En preservant ́ les droits actuels de l’utilisateur.
+    chmod  uog+r  t
+4) Donner une methode ́ pour ajouter les droits de lecture a` l’utilisateur, groupe et les autres en utilisant une representation ́ symbolique. En preservant ́ les droits actuels de l’utilisateur.
+    chmod 644 t 
+
+EXERCICE 2
+
+1) Vous disposez du droit w d’ecriture ́ sur un fichier. Cela vous donne-t-il le droit de le supprimer ?
+    oui.
+2. Un repertoire ́ vous appartenant est dans un autre repertoire ́ sur lequel le droit x est absent. Pouvez-vous acceder ́ a` votre repertoire ́ ?
+    (c) Non : le repertoire ́ qui le contient n’est pas a` moi.
+    (d) Non, je n’ai pas le droit de traverser le repertoire ́ qui le contient.
+
+3. Vous etesˆ le proprietaire ́ du fichier fich auquel vous avez retire ́ tous les droits aux membres du groupe et aux autres. Cepen-dant le repertoire ́ qui le contient dispose du droit w pour les membres du groupe. Qui peut supprimer votre fichier ?
+    (c) Personne : vous avez supprime ́ tous les droits du fichier.
+4. Avec chmod, quels sont les parametres` a` placer pour supprimer les droits d’ecriture ́ aux autres, donner le droit de lecture et d’execution ́ aux membre du groupe et tous les droits a` vous ?
+    0-r
+5. Convertissez les droits rwxr-x- - - en octal.
+    750
+6. Quel serait le masque le plus sev ́ere` pour tout le monde sauf vous ?
+    700
+7. Quel est l’effet du masque 011 sur un fichier ? Indiquez les droits du fichier en symboles.
+    tout Personne sauf le proprietaire peux executer le ficher.
+    -----x--x
+EXERCICE 3
+
+1. Votre variable umask est actuellement a` 022, expliquez ce que c ̧a implique pour la creation ́ des fichiers et repertoires? ́
+    les Personne ne pas pas cree des ficiers ou dossiers ni le modifier.
+2. On suppose que vous voulez changer votre variable umask tel que les droits suivants soient assignes ́ par defaut ́ lorsqu’un fichier ou repertoire ́ est cree ́ :
+        Proprietaire ́ : Read, Write, Execute
+        Groupe : Read, Write
+        Les autres : Read
+    Quelle commande utiliser pour le permettre?
+    umask=053
+
+EXERCICE 4
+
+Vous avez besoin de creer ́ plusieurs documents a` contenu confidentiel dans votre repertoire ́ home. Vous avez besoin d’etreˆ sureˆ que vos documents sont securis ́es ́ des yeux des predateurs ́. Par defaut ́ quand vous creez ́ un fichier les autres y ont les droits d’acces` en lecture.
+1. Comment evitez ́ que les autres accedent` a` vos fichiers quand vous les creez? ́ (Indication : changez votre variable umask)
+    umask=077
+2. Apres` avoir changer votre variable umask, creez ́ un nouveau fichier, entrez ls -l et verifiez ́ qu’il a les nouveaux droits demandes ́
+
+EXERCICE 5
+
+Creez ́ un repertoire ́ myRep dans votre home avec les droits rwx pour l’utilisateur et le groupe. On veut configurer le repertoire ́ tel que uniquement les utilisateurs du groupe peuvent chacun supprimer uniquement les fichiers dont ils sont proprietaires ́.
+Dans le shell cd
+la commande chmod 1770 myRep, ajoute quels droits et pour qui, et quel en serait l’effet? Dans le shell ls -l. Qu’est ce qu’on peut remarquer?
+    si le personne n'est pas dans le groupe du createur . peutrien faire on leve tout les droits
+    on remeraque l'aparence de t qui signifi sticky bit
